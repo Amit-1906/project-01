@@ -7,9 +7,7 @@ import {
   Download,
   Globe2,
   Mic,
-  Zap,
   Check,
-  Play,
   Layers,
   ShieldCheck,
   BookOpen,
@@ -18,8 +16,8 @@ import {
   Gamepad2
 } from 'lucide-react';
 import { WaveformHero } from '../components/WaveformHero';
-import { PageId } from '../components/Sidebar';
-import { Voice } from '../types';
+import type { PageId } from '../components/Sidebar';
+import type { Voice } from '../types';
 
 interface LandingPageProps {
   onNavigate: (page: PageId) => void;
@@ -36,200 +34,194 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   const useCases = [
     {
-      title: 'Podcasts & Radio Shows',
-      desc: 'Produce captivating audio episodes, dynamic intro hooks, and synthetic co-hosts in studio-fidelity 48kHz audio.',
+      title: 'Broadcast & Mastered Podcasts',
+      desc: 'Infuse your episodes with the vocal presence of master narrators, rendered in uncompressed 48kHz acoustic fidelity.',
       icon: Radio,
       badge: 'Broadcasting',
-      color: 'from-blue-500 to-indigo-600',
     },
     {
-      title: 'Audiobooks & Long-form',
-      desc: 'Seamless paragraph chunking and character inflection designed for rich, multi-chapter literary narrations.',
+      title: 'Literary Audio & Long-Form',
+      desc: 'Seamless multi-chapter synthesis with emotional micro-pauses and cadence preservation across thousands of sentences.',
       icon: BookOpen,
       badge: 'Publishing',
-      color: 'from-purple-500 to-pink-600',
     },
     {
-      title: 'Video & Social Commercials',
-      desc: 'Engage TikTok, YouTube, and corporate audiences with authentic voices that convert viewers into loyal customers.',
+      title: 'Haute Horlogerie & Cinematic Film',
+      desc: 'Subtle, evocative narrations tailored for luxury branding, documentaries, and high-production commercials.',
       icon: Tv,
-      badge: 'Marketing',
-      color: 'from-amber-500 to-orange-600',
+      badge: 'Editorial',
     },
     {
-      title: 'Gaming & Interactive Media',
-      desc: 'Give distinct personas to NPC dialogue, fantasy protagonists, and interactive voice agents with zero latency.',
+      title: 'Interactive Spatial Environments',
+      desc: 'Give distinctive sonic identity to interactive worlds, historical figures, and private luxury voice assistants.',
       icon: Gamepad2,
-      badge: 'Gaming',
-      color: 'from-emerald-500 to-teal-600',
+      badge: 'Spatial AI',
     },
   ];
 
-  const features = [
+  const craftPrinciples = [
     {
-      title: 'Paragraph-Level Synthesis',
-      desc: 'Automatic text segmentation ensures natural pacing and eliminates robotic breathlessness on long scripts.',
+      title: 'Paragraph-Level Resonance',
+      desc: 'Advanced contextual sentence chunking eliminates synthetic breathlessness, ensuring organic poetic rhythm.',
       icon: Layers,
     },
     {
-      title: 'Expressive Neural Vocoders',
-      desc: 'Engineered with cutting-edge diffusion and neural models for lifelike warmth, micro-inflections, and nuance.',
+      title: 'Neural Diffusion Vocoders',
+      desc: 'Architected with private studio diffusion models capturing subtle vocal tract textures and vocal fry.',
       icon: Mic,
     },
     {
-      title: 'Multilingual Global Reach',
-      desc: 'Synthesize across 40+ languages and dozens of regional accents with native phonetic accuracy.',
+      title: '40+ Sovereign Languages',
+      desc: 'Synthesize across global languages with native phonetic accuracy and refined regional inflection.',
       icon: Globe2,
     },
     {
-      title: 'Real-Time Waveform Scrubbing',
-      desc: 'Inspect frequency response, adjust pitch and velocity with millisecond timeline synchronization.',
+      title: 'Hardware-Grade Waveform Scrubbing',
+      desc: 'Inspect frequency spectrums with millisecond timeline synchronization and precision cadence tuning.',
       icon: Sliders,
     },
     {
-      title: 'Broadcast-Grade Export',
-      desc: 'Download in lossless WAV (44.1kHz / 48kHz) or high-bitrate 320kbps MP3 ready for immediate publication.',
+      title: 'Uncompressed Lossless Audio',
+      desc: 'Direct export to studio-grade WAV (48kHz / 24-bit) or broadcast 320kbps MP3 ready for final audio mastering.',
       icon: Download,
     },
     {
-      title: 'Commercial Rights Guaranteed',
-      desc: 'Full commercial license included with all generations for monetization on any streaming platform.',
+      title: 'Perpetual Commercial Freedom',
+      desc: 'Full commercial rights granted on all synthesized assets, cleared for worldwide broadcast and distribution.',
       icon: ShieldCheck,
     },
   ];
 
-  const languages = [
-    { name: 'English (US & UK)', flag: '🇺🇸 / 🇬🇧', count: '14 Voices' },
-    { name: 'Spanish (Castilian & LatAm)', flag: '🇪🇸 / 🇲🇽', count: '8 Voices' },
-    { name: 'French (Parisian & Canadian)', flag: '🇫🇷 / 🇨🇦', count: '6 Voices' },
-    { name: 'German (Hochdeutsch)', flag: '🇩🇪', count: '5 Voices' },
-    { name: 'Japanese (Tokyo Dialect)', flag: '🇯🇵', count: '4 Voices' },
-    { name: 'Hindi (Standard & Regional)', flag: '🇮🇳', count: '6 Voices' },
-    { name: 'Italian (Standard)', flag: '🇮🇹', count: '4 Voices' },
-    { name: 'Portuguese (Brazilian & European)', flag: '🇧🇷 / 🇵🇹', count: '4 Voices' },
+  const dialects = [
+    { name: 'English (US & UK)', flag: '🇺🇸 / 🇬🇧', count: '14 Instruments', locale: 'Received Pronunciation & US' },
+    { name: 'Castilian & LatAm Spanish', flag: '🇪🇸 / 🇲🇽', count: '8 Instruments', locale: 'Madrid & Mexico City' },
+    { name: 'Parisian French', flag: '🇫🇷', count: '6 Instruments', locale: 'Haute Couture Cadence' },
+    { name: 'Hochdeutsch German', flag: '🇩🇪', count: '5 Instruments', locale: 'Precision Diction' },
+    { name: 'Tokyo Japanese', flag: '🇯🇵', count: '4 Instruments', locale: 'Melodic Honorific' },
+    { name: 'Standard Hindi', flag: '🇮🇳', count: '6 Instruments', locale: 'Poetic & Contemporary' },
+    { name: 'Italian Classico', flag: '🇮🇹', count: '4 Instruments', locale: 'Tuscan & Milanese' },
+    { name: 'Portuguese', flag: '🇧🇷 / 🇵🇹', count: '4 Instruments', locale: 'Lisbon & São Paulo' },
   ];
 
   return (
-    <div className="relative overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-brand-300/30 via-indigo-200/20 to-transparent blur-3xl pointer-events-none -z-10" />
+    <div className="relative overflow-hidden bg-[#090A0C]">
+      {/* Ambient Gold Atmospheric Light */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-[#C8A96B]/10 via-[#E4D1A1]/5 to-transparent blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-[800px] right-0 w-[500px] h-[500px] bg-[#C8A96B]/5 blur-[120px] pointer-events-none -z-10" />
 
       {/* HERO SECTION */}
-      <section className="pt-20 pb-16 sm:pt-28 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        {/* Release Tag */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-950/60 border border-brand-200/70 dark:border-brand-800/60 text-brand-700 dark:text-brand-300 text-xs sm:text-sm font-semibold mb-8 shadow-xs animate-fade-in">
-          <span className="flex h-2 w-2 rounded-full bg-brand-600 animate-ping" />
-          <span>VOXORA 2.0 &bull; Studio Neural Architecture</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+      <section className="pt-24 pb-20 sm:pt-32 sm:pb-28 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto text-center">
+        {/* Small uppercase luxury label */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#17181C] border border-[#302D27] text-[#C8A96B] text-[10.5px] sm:text-[11.5px] font-mono tracking-[0.28em] uppercase mb-10 shadow-gold-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] animate-pulse" />
+          <span>THE NEXT GENERATION OF AI VOICE</span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-navy-900 dark:text-white max-w-4xl mx-auto font-['Plus_Jakarta_Sans'] leading-[1.1]">
-          Give Your Words <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600">
-            a Human Voice.
-          </span>
+        <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal text-[#F5F1E8] max-w-5xl mx-auto leading-[1.06] tracking-tight">
+          Words Deserve <br />
+          <span className="italic font-serif gold-text-pure">A Beautiful Voice.</span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          Transform any text into expressive, natural-sounding speech with AI. Experience unprecedented emotional depth, nuance, and studio clarity.
+        {/* Description */}
+        <p className="mt-8 text-base sm:text-lg lg:text-xl text-[#A5A29B] max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
+          Experience the art of transforming written words into expressive, remarkably natural speech.
         </p>
 
-        {/* CTAs */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Luxury CTA Controls */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
           <button
             onClick={() => onNavigate('studio')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 hover:from-brand-700 hover:to-purple-700 shadow-lg shadow-brand-500/25 transition transform hover:-translate-y-0.5 active:translate-y-0"
+            className="w-full sm:w-auto btn-gold px-8 py-4 rounded-full text-xs font-bold tracking-[0.2em] inline-flex items-center justify-center gap-3 shadow-gold group"
           >
-            <Sparkles className="w-5 h-5 fill-current" />
-            <span>Start Creating Free</span>
+            <span>CREATE YOUR FIRST VOICE</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
           <button
             onClick={() => onNavigate('voices')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl text-base font-semibold text-navy-900 dark:text-white bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 shadow-xs transition"
+            className="w-full sm:w-auto px-8 py-4 rounded-full text-xs font-semibold tracking-[0.2em] uppercase text-[#F5F1E8] bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 hover:bg-[#17181C] shadow-sm transition inline-flex items-center justify-center gap-2.5"
           >
-            <Headphones className="w-5 h-5 text-brand-600" />
-            <span>Explore 50+ AI Voices</span>
+            <Headphones className="w-4 h-4 text-[#C8A96B]" />
+            <span>EXPLORE THE EXPERIENCE</span>
           </button>
         </div>
 
-        {/* Interactive Waveform Visualizer & Live Demo in Hero */}
-        <div className="mt-14">
+        {/* Visual Centerpiece: Artistic Gold Particle Waveform */}
+        <div className="mt-20">
           <WaveformHero />
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section id="how-it-works" className="py-20 bg-white/70 dark:bg-navy-900/60 border-y border-slate-200/70 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-              Simple 3-Step Process
+      {/* HOW IT WORKS / THE THREE MOVEMENTS */}
+      <section id="experience" className="py-28 bg-[#101114] border-y border-[#302D27]/80">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+              THE THREE MOVEMENTS
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-              From Written Concept to Studio Master
+            <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+              From Manuscript to Master Recording
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="relative p-8 rounded-3xl bg-surface-light dark:bg-navy-800/60 border border-slate-200/70 dark:border-slate-700 shadow-subtle group hover:border-brand-400 transition">
-              <div className="w-12 h-12 rounded-2xl bg-brand-100 dark:bg-brand-950 text-brand-600 flex items-center justify-center font-extrabold text-lg mb-6 shadow-xs">
-                01
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 transition-all duration-300 shadow-luxury group">
+              <div className="text-[#C8A96B] font-serif text-3xl font-light mb-6 opacity-75 group-hover:opacity-100">
+                01 &mdash;
               </div>
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white mb-3">
-                Input or Import Script
+              <h3 className="font-serif text-2xl text-[#F5F1E8] mb-3 font-normal">
+                Curate the Text
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Type directly into our distraction-free editor or import any plain text (.txt) file. Automatic normalization cleans syntax instantly.
+              <p className="text-xs sm:text-sm text-[#A5A29B] leading-relaxed font-light">
+                Compose inside our distraction-free editorial sanctuary or import your literary manuscript. Automated linguistic normalization polishes every syllable.
               </p>
             </div>
 
-            <div className="relative p-8 rounded-3xl bg-surface-light dark:bg-navy-800/60 border border-slate-200/70 dark:border-slate-700 shadow-subtle group hover:border-brand-400 transition">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center font-extrabold text-lg mb-6 shadow-xs">
-                02
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 transition-all duration-300 shadow-luxury group">
+              <div className="text-[#C8A96B] font-serif text-3xl font-light mb-6 opacity-75 group-hover:opacity-100">
+                02 &mdash;
               </div>
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white mb-3">
-                Fine-tune Voice & Cadence
+              <h3 className="font-serif text-2xl text-[#F5F1E8] mb-3 font-normal">
+                Sculpt Tone & Cadence
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Select from our curated library of 50+ voices. Tailor speed, pitch, stability, and emotional delivery with responsive sliders.
+              <p className="text-xs sm:text-sm text-[#A5A29B] leading-relaxed font-light">
+                Select your vocal instrument from 50+ master voice profiles. Calibrate tempo, micro-pitch, breath stability, and emotional presence with tactile precision.
               </p>
             </div>
 
-            <div className="relative p-8 rounded-3xl bg-surface-light dark:bg-navy-800/60 border border-slate-200/70 dark:border-slate-700 shadow-subtle group hover:border-brand-400 transition">
-              <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950 text-purple-600 flex items-center justify-center font-extrabold text-lg mb-6 shadow-xs">
-                03
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 transition-all duration-300 shadow-luxury group">
+              <div className="text-[#C8A96B] font-serif text-3xl font-light mb-6 opacity-75 group-hover:opacity-100">
+                03 &mdash;
               </div>
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white mb-3">
-                Synthesize & Export
+              <h3 className="font-serif text-2xl text-[#F5F1E8] mb-3 font-normal">
+                Synthesize & Master
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Generate speech in seconds with our high-definition neural engine. Preview waveforms interactively and export lossless audio.
+              <p className="text-xs sm:text-sm text-[#A5A29B] leading-relaxed font-light">
+                Generate high-definition neural audio in seconds. Review frequency responses on a custom gold waveform and export uncompressed broadcast masters.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* EXPLORE AI VOICES SECTION */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+      {/* CURATED VOICE ATELIER SECTION */}
+      <section className="py-28 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 pb-6 border-b border-[#302D27]/80">
           <div>
-            <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-              Human In Every Inflection
+            <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+              THE VOICE ATELIER
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-              Featured Voice Profiles
+            <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+              Instruments of Pure Expression
             </p>
           </div>
           <button
             onClick={() => onNavigate('voices')}
-            className="mt-4 sm:mt-0 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
+            className="mt-6 sm:mt-0 inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] uppercase text-[#C8A96B] hover:text-[#E4D1A1] transition group"
           >
-            <span>View All 50+ Voices</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>DISCOVER ALL 50+ VOICES</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 
@@ -237,32 +229,34 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {featuredVoices.slice(0, 4).map((voice) => (
             <div
               key={voice.id}
-              className="p-5 rounded-2xl bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 shadow-subtle hover:shadow-card transition flex flex-col justify-between"
+              className="p-6 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 transition-all duration-300 shadow-luxury flex flex-col justify-between group"
             >
               <div>
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3.5 mb-5">
                   <img
                     src={voice.avatar}
                     alt={voice.name}
-                    className="w-12 h-12 rounded-xl object-cover shadow-xs border border-slate-200 dark:border-slate-700"
+                    className="w-13 h-13 rounded-2xl object-cover border border-[#302D27] group-hover:border-[#C8A96B]/60 transition"
                   />
                   <div>
-                    <h4 className="font-bold text-navy-900 dark:text-white text-base">
+                    <h4 className="font-serif text-xl font-medium text-[#F5F1E8] group-hover:text-[#E4D1A1] transition">
                       {voice.name}
                     </h4>
-                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                    <span className="text-xs text-[#A5A29B] font-light">
                       {voice.language} &bull; {voice.accent}
                     </span>
                   </div>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 mb-4 leading-relaxed">
+
+                <p className="text-xs text-[#A5A29B] line-clamp-2 mb-5 leading-relaxed font-light">
                   {voice.description}
                 </p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">
+
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider bg-[#090A0C] text-[#C8A96B] border border-[#302D27]">
                     {voice.category}
                   </span>
-                  <span className="px-2 py-0.5 rounded-md text-[10px] text-slate-500 bg-slate-100 dark:bg-slate-700">
+                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider bg-[#090A0C] text-[#706E69] border border-[#302D27]">
                     {voice.gender}
                   </span>
                 </div>
@@ -273,43 +267,43 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   onSelectVoice(voice);
                   onNavigate('studio');
                 }}
-                className="w-full py-2 rounded-xl text-xs font-semibold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950 hover:bg-brand-100 dark:hover:bg-brand-900/80 transition"
+                className="w-full py-2.5 rounded-full text-xs font-mono tracking-[0.16em] uppercase text-[#E4D1A1] bg-[#1D1E22] border border-[#302D27] hover:border-[#C8A96B] hover:bg-[#C8A96B] hover:text-[#090A0C] font-semibold transition-all duration-300"
               >
-                Open in Studio
+                Audition in Studio
               </button>
             </div>
           ))}
         </div>
       </section>
 
-      {/* FEATURES & CAPABILITIES */}
-      <section id="features" className="py-20 bg-slate-50/70 dark:bg-navy-900/50 border-t border-slate-200/70 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-              Architected for Perfection
+      {/* THE CRAFT & CAPABILITIES */}
+      <section id="craft" className="py-28 bg-[#101114] border-t border-[#302D27]/80">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+              PRECISION ACOUSTICS
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-              Cutting-Edge Neural Features
+            <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+              Crafted with Audio Engineering Rigor
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feat, idx) => {
-              const Icon = feat.icon;
+            {craftPrinciples.map((item, idx) => {
+              const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 shadow-subtle hover:shadow-card transition"
+                  className="p-8 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/50 transition duration-300 shadow-luxury"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 flex items-center justify-center mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#090A0C] border border-[#302D27] text-[#C8A96B] flex items-center justify-center mb-6 shadow-inner-metal">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-navy-900 dark:text-white mb-2">
-                    {feat.title}
+                  <h3 className="font-serif text-xl font-normal text-[#F5F1E8] mb-2.5">
+                    {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {feat.desc}
+                  <p className="text-xs text-[#A5A29B] leading-relaxed font-light">
+                    {item.desc}
                   </p>
                 </div>
               );
@@ -318,44 +312,47 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* SUPPORTED LANGUAGES */}
-      <section id="languages" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-            Global Accents
+      {/* GLOBAL DIALECTS */}
+      <section className="py-28 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+            GLOBAL RESONANCE
           </h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-            Speak to Every Audience in Their Native Tongue
+          <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+            World Accents & Cultural Diction
           </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {languages.map((lang, idx) => (
+          {dialects.map((lang, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-xl bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 text-center hover:border-brand-400 transition"
+              className="p-5 rounded-2xl bg-[#141519] border border-[#302D27] text-center hover:border-[#C8A96B]/60 transition"
             >
-              <div className="text-2xl mb-1">{lang.flag}</div>
-              <div className="text-sm font-bold text-navy-900 dark:text-white truncate">
+              <div className="text-2xl mb-2">{lang.flag}</div>
+              <div className="font-serif text-base font-normal text-[#F5F1E8] truncate">
                 {lang.name}
               </div>
-              <div className="text-xs text-brand-600 dark:text-brand-400 font-medium mt-1">
+              <div className="text-[11px] text-[#C8A96B] font-mono mt-1">
                 {lang.count}
+              </div>
+              <div className="text-[10px] text-[#706E69] font-light mt-1">
+                {lang.locale}
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* USE CASES */}
-      <section className="py-20 bg-white/70 dark:bg-navy-900/60 border-t border-slate-200/70 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-              Versatile Applications
+      {/* USE CASES / EDITORIAL DISCIPLINES */}
+      <section className="py-28 bg-[#101114] border-t border-[#302D27]/80">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+              APPLICATIONS
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-              Engineered for Every Creator & Enterprise
+            <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+              Designed for Demanding Audio Creators
             </p>
           </div>
 
@@ -365,21 +362,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               return (
                 <div
                   key={i}
-                  className="p-6 rounded-2xl bg-surface-light dark:bg-navy-800/80 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between"
+                  className="p-7 rounded-3xl bg-[#141519] border border-[#302D27] flex flex-col justify-between shadow-luxury hover:border-[#C8A96B]/50 transition"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 flex items-center justify-center">
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-10 h-10 rounded-xl bg-[#090A0C] border border-[#302D27] text-[#C8A96B] flex items-center justify-center">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                      <span className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full bg-[#1D1E22] text-[#A5A29B] border border-[#302D27]">
                         {uc.badge}
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-navy-900 dark:text-white mb-2">
+                    <h3 className="font-serif text-xl font-normal text-[#F5F1E8] mb-2.5">
                       {uc.title}
                     </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p className="text-xs text-[#A5A29B] font-light leading-relaxed">
                       {uc.desc}
                     </p>
                   </div>
@@ -390,203 +387,205 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* PRICING SECTION */}
-      <section id="pricing" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-xs font-bold tracking-widest uppercase text-brand-600 dark:text-brand-400 mb-2">
-            Transparent Pricing
+      {/* CURATION / EDITIONS / PRICING */}
+      <section id="curation" className="py-28 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#C8A96B] mb-3">
+            EDITIONS & MEMBERSHIP
           </h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-            Invest in Pristine Audio Production
+          <p className="font-serif text-3xl sm:text-5xl text-[#F5F1E8] font-light">
+            Invest in Timeless Vocal Artistry
           </p>
 
-          {/* Monthly / Yearly Toggle */}
-          <div className="mt-6 inline-flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold">
+          {/* Toggle */}
+          <div className="mt-8 inline-flex items-center p-1 rounded-full bg-[#141519] border border-[#302D27] text-xs font-mono">
             <button
               onClick={() => setBillingCycle('monthly')}
-              className={`px-3 py-1.5 rounded-lg transition ${
+              className={`px-4 py-1.5 rounded-full transition ${
                 billingCycle === 'monthly'
-                  ? 'bg-white dark:bg-navy-700 text-navy-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                  ? 'bg-[#C8A96B] text-[#090A0C] font-bold'
+                  : 'text-[#A5A29B] hover:text-[#F5F1E8]'
               }`}
             >
-              Monthly Billing
+              MONTHLY
             </button>
             <button
               onClick={() => setBillingCycle('yearly')}
-              className={`px-3 py-1.5 rounded-lg transition flex items-center gap-1 ${
+              className={`px-4 py-1.5 rounded-full transition flex items-center gap-1.5 ${
                 billingCycle === 'yearly'
-                  ? 'bg-white dark:bg-navy-700 text-navy-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                  ? 'bg-[#C8A96B] text-[#090A0C] font-bold'
+                  : 'text-[#A5A29B] hover:text-[#F5F1E8]'
               }`}
             >
-              <span>Annual Billing</span>
-              <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.2 rounded-full">
-                Save 20%
+              <span>ANNUAL PRIVILEGE</span>
+              <span className="text-[9px] text-[#090A0C] bg-[#E4D1A1] font-bold px-1.5 rounded-full">
+                -20%
               </span>
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {/* Starter Plan */}
-          <div className="p-8 rounded-3xl bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between">
+          {/* Starter Edition */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-[#141519] border border-[#302D27] flex flex-col justify-between shadow-luxury">
             <div>
-              <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Starter
+              <div className="text-[10px] font-mono tracking-[0.25em] text-[#A5A29B] uppercase mb-3">
+                FOUNDATION
               </div>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-extrabold text-navy-900 dark:text-white">$0</span>
-                <span className="text-xs text-slate-500">/ forever free</span>
+              <div className="flex items-baseline gap-1.5 mb-6">
+                <span className="font-serif text-4xl sm:text-5xl font-light text-[#F5F1E8]">$0</span>
+                <span className="text-xs text-[#706E69] font-mono">/ complimentary</span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mb-6">
-                Ideal for creators exploring neural text-to-speech and testing studio capabilities.
+              <p className="text-xs text-[#A5A29B] font-light mb-8 leading-relaxed">
+                Experience full studio synthesis, custom waveforms, and our complete 50+ neural voice library.
               </p>
-              <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>Unlimited Neural Studio speech generation</span>
+              <ul className="space-y-3.5 text-xs text-[#A5A29B] mb-10 font-light">
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Unlimited Studio Neural voice generation</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>50+ High-Definition Voices included</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>50+ High-Definition voices included</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
                   <span>Interactive WaveSurfer waveform player</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>Standard MP3 export format</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Standard broadcast MP3 download</span>
                 </li>
               </ul>
             </div>
             <button
               onClick={() => onNavigate('studio')}
-              className="w-full py-3 rounded-xl text-xs font-bold text-brand-600 bg-brand-50 dark:bg-brand-950/80 hover:bg-brand-100 transition"
+              className="w-full py-3.5 rounded-full text-xs font-mono tracking-[0.16em] uppercase text-[#E4D1A1] bg-[#1D1E22] border border-[#302D27] hover:border-[#C8A96B] transition font-semibold"
             >
-              Get Started Free
+              Enter the Studio
             </button>
           </div>
 
-          {/* Creator Pro (Featured) */}
-          <div className="relative p-8 rounded-3xl bg-white dark:bg-navy-800 border-2 border-brand-500 shadow-premium flex flex-col justify-between ring-4 ring-brand-500/10">
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
-              Most Popular
+          {/* Atelier Pro (Featured Luxury) */}
+          <div className="relative p-8 sm:p-10 rounded-3xl bg-[#17181C] border border-[#C8A96B] shadow-gold flex flex-col justify-between ring-1 ring-[#C8A96B]/50">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#E4D1A1] to-[#C8A96B] text-[#090A0C] text-[9.5px] font-mono font-bold tracking-[0.25em] uppercase shadow-md">
+              ATELIER CHOICE
             </div>
             <div>
-              <div className="text-sm font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider mb-2">
-                Creator Pro
+              <div className="text-[10px] font-mono tracking-[0.25em] text-[#C8A96B] uppercase mb-3">
+                CREATOR PRO
               </div>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-extrabold text-navy-900 dark:text-white">
+              <div className="flex items-baseline gap-1.5 mb-6">
+                <span className="font-serif text-4xl sm:text-5xl font-normal text-[#F5F1E8]">
                   {billingCycle === 'monthly' ? '$24' : '$19'}
                 </span>
-                <span className="text-xs text-slate-500">/ month</span>
+                <span className="text-xs text-[#706E69] font-mono">/ month</span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mb-6">
-                Designed for podcasters, educators, YouTubers, and commercial voice talent.
+              <p className="text-xs text-[#A5A29B] font-light mb-8 leading-relaxed">
+                Dedicated to master authors, podcast studios, commercial agencies, and broadcast creators.
               </p>
-              <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
-                  <span>Everything in Starter + Priority Queue</span>
+              <ul className="space-y-3.5 text-xs text-[#F5F1E8] mb-10 font-light">
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Priority Neural Rendering Pipeline</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
-                  <span>Lossless 48kHz WAV audio export</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Uncompressed 48kHz / 24-bit WAV Master Export</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
-                  <span>Full Commercial Monetization Rights</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Global Commercial Distribution Rights</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
-                  <span>Long-script paragraph chunking</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Long-Script Paragraph Chunking (10k+ Words)</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
-                  <span>OpenAI & ElevenLabs custom API key support</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>OpenAI & ElevenLabs API Engine Integration</span>
                 </li>
               </ul>
             </div>
             <button
               onClick={() => onNavigate('studio')}
-              className="w-full py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 shadow-md transition"
+              className="w-full btn-gold py-3.5 rounded-full text-xs font-bold tracking-[0.18em]"
             >
-              Start 14-Day Pro Trial
+              Claim Atelier Pro Edition
             </button>
           </div>
 
-          {/* Enterprise Studio */}
-          <div className="p-8 rounded-3xl bg-white dark:bg-navy-800 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between">
+          {/* Maison Enterprise */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-[#141519] border border-[#302D27] flex flex-col justify-between shadow-luxury">
             <div>
-              <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Enterprise Studio
+              <div className="text-[10px] font-mono tracking-[0.25em] text-[#A5A29B] uppercase mb-3">
+                MAISON ENTERPRISE
               </div>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-extrabold text-navy-900 dark:text-white">
+              <div className="flex items-baseline gap-1.5 mb-6">
+                <span className="font-serif text-4xl sm:text-5xl font-light text-[#F5F1E8]">
                   {billingCycle === 'monthly' ? '$89' : '$72'}
                 </span>
-                <span className="text-xs text-slate-500">/ month</span>
+                <span className="text-xs text-[#706E69] font-mono">/ month</span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mb-6">
-                Built for publishers, game studios, and agency teams producing massive volumes.
+              <p className="text-xs text-[#A5A29B] font-light mb-8 leading-relaxed">
+                For major game studios, luxury brands, international networks, and high-volume publishers.
               </p>
-              <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>Unlimited multi-seat team workspace</span>
+              <ul className="space-y-3.5 text-xs text-[#A5A29B] mb-10 font-light">
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Multi-Seat Collaborative Team Workspaces</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>Custom voice cloning & dedicated fine-tuning</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Private Custom Voice Cloning & Fine-Tuning</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>REST API integration & webhooks</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>High-Throughput REST API & Webhooks</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  <span>Dedicated account manager & 99.99% SLA</span>
+                <li className="flex items-center gap-2.5">
+                  <Check className="w-4 h-4 text-[#C8A96B] flex-shrink-0" />
+                  <span>Dedicated Audio Engineer & 99.99% SLA</span>
                 </li>
               </ul>
             </div>
             <button
               onClick={() => onNavigate('studio')}
-              className="w-full py-3 rounded-xl text-xs font-bold text-navy-900 dark:text-white bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 transition"
+              className="w-full py-3.5 rounded-full text-xs font-mono tracking-[0.16em] uppercase text-[#A5A29B] hover:text-[#F5F1E8] bg-[#1D1E22] border border-[#302D27] hover:border-[#C8A96B] transition font-semibold"
             >
-              Contact Sales
+              Inquire Privately
             </button>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-navy-950 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white">
-              <Sparkles className="w-4 h-4 fill-current" />
+      <footer className="border-t border-[#302D27]/80 bg-[#090A0C] py-16 px-6 sm:px-8 lg:px-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex items-center gap-3.5">
+            <div className="w-8 h-8 rounded-full border border-[#C8A96B]/50 flex items-center justify-center bg-[#17181C]">
+              <span className="w-2 h-2 rounded-full bg-[#C8A96B]" />
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-              VOXORA
-            </span>
-            <span className="text-xs text-slate-400">&bull; Premium AI Voice Studio &copy; 2026</span>
+            <div>
+              <span className="font-serif text-2xl tracking-[0.2em] text-[#F5F1E8]">VOXORA</span>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#706E69] font-mono mt-0.5">
+                THE ART OF GIVING WORDS A VOICE. &copy; 2026
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-6 text-xs text-slate-500 dark:text-slate-400">
-            <button onClick={() => onNavigate('studio')} className="hover:text-brand-600 transition">
-              AI Voice Studio
+          <div className="flex items-center space-x-8 text-xs font-mono uppercase tracking-[0.18em] text-[#A5A29B]">
+            <button onClick={() => onNavigate('studio')} className="hover:text-[#E4D1A1] transition">
+              Voice Studio
             </button>
-            <button onClick={() => onNavigate('voices')} className="hover:text-brand-600 transition">
-              Voice Library
+            <button onClick={() => onNavigate('voices')} className="hover:text-[#E4D1A1] transition">
+              Atelier
             </button>
-            <button onClick={() => onNavigate('projects')} className="hover:text-brand-600 transition">
+            <button onClick={() => onNavigate('projects')} className="hover:text-[#E4D1A1] transition">
               Projects
             </button>
-            <button onClick={() => onNavigate('settings')} className="hover:text-brand-600 transition">
-              Settings & API
+            <button onClick={() => onNavigate('settings')} className="hover:text-[#E4D1A1] transition">
+              Preferences
             </button>
           </div>
         </div>
@@ -594,4 +593,3 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     </div>
   );
 };
-

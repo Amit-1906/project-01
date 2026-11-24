@@ -6,14 +6,10 @@ import {
   Play,
   Pause,
   Download,
-  Calendar,
-  Sparkles,
   Volume2,
-  HardDrive,
-  Clock,
   ArrowRight
 } from 'lucide-react';
-import { HistoryItem } from '../types';
+import type { HistoryItem } from '../types';
 import { api } from '../services/api';
 
 interface HistoryPageProps {
@@ -71,7 +67,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
         audioRef.current.pause();
         setActivePlayingId(null);
       }
-      onShowToast('success', 'History Removed', 'Generation removed from history log.');
+      onShowToast('success', 'History Removed', 'Recording removed from history log.');
     } catch (err: any) {
       onShowToast('error', 'Delete Failed', err.message);
     }
@@ -109,7 +105,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-10 bg-[#090A0C]">
       <audio
         ref={audioRef}
         onEnded={() => setActivePlayingId(null)}
@@ -117,120 +113,120 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
       />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-[#302D27]/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/60 border border-brand-200/50 dark:border-brand-800/40 text-brand-700 dark:text-brand-300 text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#17181C] border border-[#302D27] text-[#C8A96B] text-[10.5px] font-mono tracking-[0.25em] uppercase mb-4 shadow-gold-sm">
             <History className="w-3.5 h-3.5" />
-            <span>Generation Log</span>
+            <span>CHRONOLOGY OF SYNTHESIS</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans'] tracking-tight">
+          <h1 className="font-serif text-4xl sm:text-6xl font-normal text-[#F5F1E8] tracking-tight">
             Audio History
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Browse, re-listen, and download all previous high-definition voice generations.
+          <p className="text-sm text-[#A5A29B] font-light mt-2">
+            Inspect, re-audition, and export all previous high-definition neural masterings.
           </p>
         </div>
 
         {history.length > 0 && (
           <button
             onClick={() => setClearConfirmOpen(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 transition"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-rose-400 hover:text-rose-300 bg-rose-950/40 border border-rose-900/60 transition"
           >
             <Trash2 className="w-3.5 h-3.5" />
-            <span>Clear History</span>
+            <span>Purge History</span>
           </button>
         )}
       </div>
 
       {/* Search Bar */}
-      <div className="p-4 rounded-3xl bg-white dark:bg-navy-900 border border-slate-200/80 dark:border-slate-800 shadow-subtle flex items-center justify-between">
+      <div className="p-5 rounded-3xl bg-[#101114] border border-[#302D27] shadow-luxury flex items-center justify-between">
         <div className="relative flex-1 w-full max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#706E69]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search generations by title, snippet, or voice..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl text-xs sm:text-sm bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-slate-700 text-navy-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-brand-500 transition"
+            placeholder="Search recordings by title, phrase, or instrument..."
+            className="w-full pl-11 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm bg-[#17181C] border border-[#302D27] text-[#F5F1E8] placeholder:text-[#706E69] focus:outline-none focus:border-[#C8A96B] transition font-sans"
           />
         </div>
 
-        <div className="text-xs font-medium text-slate-400">
-          Showing <span className="text-navy-900 dark:text-white font-bold">{history.length}</span> generations
+        <div className="text-xs font-mono text-[#706E69]">
+          Showing <span className="text-[#F5F1E8] font-bold">{history.length}</span> recordings
         </div>
       </div>
 
       {/* History List */}
       {loading ? (
-        <div className="p-16 text-center text-xs font-medium text-slate-400">
-          Loading generation history...
+        <div className="p-20 text-center text-xs font-mono tracking-wider text-[#706E69]">
+          RETRIEVING RECORDINGS...
         </div>
       ) : history.length === 0 ? (
-        <div className="p-16 rounded-3xl bg-white dark:bg-navy-900 border border-slate-200/80 dark:border-slate-800 text-center">
-          <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mx-auto mb-3">
+        <div className="p-20 rounded-3xl bg-[#101114] border border-[#302D27] text-center">
+          <div className="w-12 h-12 rounded-full bg-[#17181C] border border-[#302D27] flex items-center justify-center text-[#706E69] mx-auto mb-4">
             <Volume2 className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-navy-900 dark:text-white">
-            No audio history found
+          <h3 className="font-serif text-2xl font-normal text-[#F5F1E8]">
+            No Recordings Found
           </h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-            {searchQuery ? 'No recordings matched your search.' : 'Synthesize speech in the Studio to build your production history.'}
+          <p className="text-xs text-[#A5A29B] font-light mt-1.5 max-w-sm mx-auto">
+            {searchQuery ? 'No recordings matched your search parameters.' : 'Synthesize speech in the Studio to build your private chronological log.'}
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {history.map((item) => {
             const isPlaying = activePlayingId === item.id;
 
             return (
               <div
                 key={item.id}
-                className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-navy-900 border border-slate-200/80 dark:border-slate-800 shadow-subtle hover:border-brand-300 dark:hover:border-brand-700 transition flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                className="p-5 sm:p-6 rounded-3xl bg-[#141519] border border-[#302D27] hover:border-[#C8A96B]/60 transition-all duration-300 shadow-luxury flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 group"
               >
                 {/* Left: Play button + Title + Snippet */}
-                <div className="flex items-start sm:items-center gap-3.5 min-w-0 flex-1">
+                <div className="flex items-start sm:items-center gap-4 min-w-0 flex-1">
                   <button
                     onClick={() => handlePlayToggle(item)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-sm transition transform active:scale-95 ${
-                      isPlaying ? 'bg-emerald-500' : 'bg-brand-600 hover:bg-brand-700'
+                    className={`w-11 h-11 rounded-full flex items-center justify-center text-[#090A0C] flex-shrink-0 shadow-gold-sm transition transform group-hover:scale-105 active:scale-95 ${
+                      isPlaying ? 'bg-[#E4D1A1]' : 'bg-[#C8A96B] hover:bg-[#E4D1A1]'
                     }`}
-                    title={isPlaying ? 'Pause' : 'Play audio'}
+                    title={isPlaying ? 'Pause' : 'Audition recording'}
                   >
                     {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                   </button>
 
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-sm text-navy-900 dark:text-white truncate">
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <h4 className="font-serif text-xl font-normal text-[#F5F1E8] group-hover:text-[#E4D1A1] transition truncate">
                         {item.title}
                       </h4>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">
+                      <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#090A0C] text-[#C8A96B] border border-[#302D27]">
                         {item.voice_name}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-mono">
+                      <span className="text-[10.5px] text-[#706E69] font-mono">
                         {item.language}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                    <p className="text-xs text-[#A5A29B] font-light truncate">
                       "{item.text_snippet}"
                     </p>
                   </div>
                 </div>
 
                 {/* Right: Meta & Actions */}
-                <div className="flex items-center space-x-4 self-end sm:self-center text-xs text-slate-400">
+                <div className="flex items-center space-x-5 self-end sm:self-center text-xs font-mono text-[#706E69]">
                   <div className="text-right">
-                    <div className="font-mono font-semibold text-navy-900 dark:text-white">
+                    <div className="text-[#F5F1E8] font-bold">
                       {item.duration}s &bull; {formatFileSize(item.file_size)}
                     </div>
-                    <div className="text-[11px] text-slate-400">{formatDate(item.created_at)}</div>
+                    <div className="text-[10.5px] text-[#706E69] mt-0.5">{formatDate(item.created_at)}</div>
                   </div>
 
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1.5">
                     <a
                       href={item.audio_url}
                       download={`voxora_${item.title.toLowerCase().replace(/[^a-z0-9]/g, '_')}.mp3`}
-                      className="p-2 rounded-lg text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                      className="p-2.5 rounded-xl text-[#A5A29B] hover:text-[#C8A96B] hover:bg-[#17181C] transition"
                       title="Download MP3"
                     >
                       <Download className="w-4 h-4" />
@@ -238,16 +234,16 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
 
                     <button
                       onClick={() => onLoadScriptToStudio(item.full_text || item.text_snippet, item.voice_id)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-950/60 transition"
-                      title="Reopen text in Studio"
+                      className="p-2.5 rounded-xl text-[#A5A29B] hover:text-[#E4D1A1] hover:bg-[#17181C] transition"
+                      title="Load text into Studio"
                     >
                       <ArrowRight className="w-4 h-4" />
                     </button>
 
                     <button
                       onClick={() => handleDeleteItem(item.id)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
-                      title="Delete from history"
+                      className="p-2.5 rounded-xl text-[#706E69] hover:text-rose-400 hover:bg-[#17181C] transition"
+                      title="Delete recording"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -261,29 +257,29 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
 
       {/* CLEAR ALL CONFIRMATION MODAL */}
       {clearConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/50 backdrop-blur-xs p-4">
-          <div className="w-full max-w-sm bg-white dark:bg-navy-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-2xl text-center">
-            <div className="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-600 flex items-center justify-center mx-auto mb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#090A0C]/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm bg-[#141519] rounded-3xl p-7 border border-[#302D27] shadow-2xl text-center">
+            <div className="w-12 h-12 rounded-full bg-rose-950/60 border border-rose-800/60 text-rose-400 flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-base text-navy-900 dark:text-white mb-1">
-              Clear All Audio History?
+            <h3 className="font-serif text-2xl font-normal text-[#F5F1E8] mb-2">
+              Purge All History?
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
-              This will permanently delete all records of previous speech generations.
+            <p className="text-xs text-[#A5A29B] font-light mb-7">
+              This will permanently delete all records of previous neural speech masterings.
             </p>
             <div className="flex justify-center space-x-3">
               <button
                 onClick={() => setClearConfirmOpen(false)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#A5A29B] hover:text-[#F5F1E8]"
               >
                 Cancel
               </button>
               <button
                 onClick={handleClearAll}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition"
+                className="px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-bold text-white bg-rose-700 hover:bg-rose-600 transition"
               >
-                Clear Everything
+                Purge Everything
               </button>
             </div>
           </div>
@@ -292,4 +288,3 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
     </div>
   );
 };
-

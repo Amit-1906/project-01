@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, SlidersHorizontal, Sparkles, Star, Globe2, Mic2 } from 'lucide-react';
-import { Voice } from '../types';
+import { Search, Sparkles, Star, Mic2 } from 'lucide-react';
+import type { Voice } from '../types';
 import { VoiceCard } from '../components/VoiceCard';
 
 interface VoiceLibraryPageProps {
@@ -36,7 +36,7 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
   const [languageFilter, setLanguageFilter] = useState('All');
   const [onlyFavorites, setOnlyFavorites] = useState(false);
 
-  // Extract unique languages & accents
+  // Extract unique languages
   const languages = ['All', ...new Set(voices.map((v) => v.language.split(' ')[0]))];
 
   const filteredVoices = voices.filter((voice) => {
@@ -81,60 +81,60 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-10 bg-[#090A0C]">
       {/* Page Title & Intro */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#302D27]/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/60 border border-brand-200/50 dark:border-brand-800/40 text-brand-700 dark:text-brand-300 text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#17181C] border border-[#302D27] text-[#C8A96B] text-[10.5px] font-mono tracking-[0.25em] uppercase mb-4 shadow-gold-sm">
             <Mic2 className="w-3.5 h-3.5" />
-            <span>Neural Acoustic Catalog</span>
+            <span>NEURAL ACOUSTIC CATALOGUE</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-navy-900 dark:text-white font-['Plus_Jakarta_Sans'] tracking-tight">
-            Voice Library
+          <h1 className="font-serif text-4xl sm:text-6xl font-normal text-[#F5F1E8] tracking-tight">
+            Voice Atelier
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
-            Explore 50+ hyper-realistic AI voices trained on world-class voice actors. Listen to real samples, favorite your top picks, and load them directly into the Studio.
+          <p className="text-sm text-[#A5A29B] font-light mt-2 max-w-xl leading-relaxed">
+            Discover bespoke AI vocal instruments trained with world-class voice actors. Audition real acoustic samples, curate your favorites, and open them directly in the Studio.
           </p>
         </div>
 
         {/* Quick Stats Pill */}
-        <div className="flex items-center gap-3 bg-white dark:bg-navy-900 px-4 py-2 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+        <div className="flex items-center gap-4 bg-[#141519] px-5 py-3 rounded-2xl border border-[#302D27] shadow-luxury">
           <div className="text-right">
-            <div className="text-xs font-bold text-navy-900 dark:text-white">{filteredVoices.length} Voices</div>
-            <div className="text-[10px] text-slate-400">Available to Stream</div>
+            <div className="font-mono text-sm font-bold text-[#E4D1A1]">{filteredVoices.length} Instruments</div>
+            <div className="text-[10px] uppercase font-mono tracking-wider text-[#706E69]">Curated & Mastered</div>
           </div>
-          <div className="w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-950 text-brand-600 flex items-center justify-center">
-            <Sparkles className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-xl bg-[#090A0C] border border-[#302D27] text-[#C8A96B] flex items-center justify-center">
+            <Sparkles className="w-4 h-4 fill-current" />
           </div>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-3xl bg-white dark:bg-navy-900 border border-slate-200/80 dark:border-slate-800 shadow-subtle space-y-4">
-        {/* Top search input & select dropdowns */}
-        <div className="flex flex-col sm:flex-row items-center gap-3">
+      <div className="p-5 rounded-3xl bg-[#101114] border border-[#302D27] shadow-luxury space-y-5">
+        {/* Search input & select dropdowns */}
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           {/* Search Box */}
           <div className="relative flex-1 w-full">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#706E69]" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by voice name, accent, language, style, or keywords..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-slate-700 text-navy-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-brand-500 transition"
+              placeholder="Search by instrument name, accent, language, style, or diction..."
+              className="w-full pl-11 pr-4 py-3 rounded-2xl text-xs sm:text-sm bg-[#17181C] border border-[#302D27] text-[#F5F1E8] placeholder:text-[#706E69] focus:outline-none focus:border-[#C8A96B] transition font-sans"
             />
           </div>
 
           {/* Gender Filter */}
-          <div className="flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 text-xs font-medium w-full sm:w-auto">
+          <div className="flex rounded-2xl bg-[#090A0C] p-1 border border-[#302D27] text-xs font-mono w-full sm:w-auto">
             {(['All', 'Female', 'Male'] as const).map((g) => (
               <button
                 key={g}
                 onClick={() => setGenderFilter(g)}
-                className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-lg transition ${
+                className={`flex-1 sm:flex-initial px-3.5 py-2 rounded-xl transition ${
                   genderFilter === g
-                    ? 'bg-white dark:bg-navy-700 font-bold text-brand-600 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                    ? 'bg-[#C8A96B] font-bold text-[#090A0C] shadow-xs'
+                    : 'text-[#A5A29B] hover:text-[#F5F1E8]'
                 }`}
               >
                 {g}
@@ -146,10 +146,10 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
           <select
             value={languageFilter}
             onChange={(e) => setLanguageFilter(e.target.value)}
-            className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-slate-700 text-navy-900 dark:text-white focus:outline-none focus:border-brand-500 transition cursor-pointer"
+            className="w-full sm:w-auto px-4 py-3 rounded-2xl text-xs sm:text-sm bg-[#17181C] border border-[#302D27] text-[#F5F1E8] focus:outline-none focus:border-[#C8A96B] transition cursor-pointer font-sans"
           >
             {languages.map((l) => (
-              <option key={l} value={l}>
+              <option key={l} value={l} className="bg-[#17181C] text-[#F5F1E8]">
                 {l === 'All' ? 'All Languages' : l}
               </option>
             ))}
@@ -158,27 +158,27 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
           {/* Favorites Filter button */}
           <button
             onClick={() => setOnlyFavorites(!onlyFavorites)}
-            className={`w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition ${
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-xs font-mono uppercase tracking-wider border transition ${
               onlyFavorites
-                ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300'
-                : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? 'bg-[#C8A96B]/20 border-[#C8A96B] text-[#E4D1A1]'
+                : 'border-[#302D27] bg-[#17181C] text-[#A5A29B] hover:text-[#F5F1E8] hover:border-[#C8A96B]/50'
             }`}
           >
-            <Star className={`w-3.5 h-3.5 ${onlyFavorites ? 'fill-current' : ''}`} />
-            <span>Favorites</span>
+            <Star className={`w-3.5 h-3.5 ${onlyFavorites ? 'fill-current text-[#C8A96B]' : ''}`} />
+            <span>Curated</span>
           </button>
         </div>
 
         {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-1 pt-2 border-t border-[#302D27]/80">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              className={`px-4 py-2 rounded-full text-xs font-mono tracking-wider uppercase whitespace-nowrap transition ${
                 activeCategory === cat
-                  ? 'bg-brand-600 text-white shadow-xs'
-                  : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-200'
+                  ? 'bg-[#C8A96B] text-[#090A0C] font-bold shadow-gold-sm'
+                  : 'bg-[#141519] border border-[#302D27] text-[#A5A29B] hover:text-[#F5F1E8] hover:border-[#C8A96B]/40'
               }`}
             >
               {cat}
@@ -189,15 +189,15 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
 
       {/* Voices Grid */}
       {filteredVoices.length === 0 ? (
-        <div className="p-16 rounded-3xl bg-white dark:bg-navy-900 border border-slate-200/80 dark:border-slate-800 text-center">
-          <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mx-auto mb-3">
+        <div className="p-20 rounded-3xl bg-[#101114] border border-[#302D27] text-center">
+          <div className="w-12 h-12 rounded-full bg-[#17181C] border border-[#302D27] flex items-center justify-center text-[#706E69] mx-auto mb-4">
             <Search className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-navy-900 dark:text-white">
-            No voices found
+          <h3 className="font-serif text-2xl font-normal text-[#F5F1E8]">
+            No Instruments Found
           </h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-            Try adjusting your search terms, category pills, or clearing filters.
+          <p className="text-xs text-[#A5A29B] font-light mt-1.5 max-w-sm mx-auto">
+            Try adjusting your search criteria, category filters, or language selection.
           </p>
           <button
             onClick={() => {
@@ -207,7 +207,7 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
               setLanguageFilter('All');
               setOnlyFavorites(false);
             }}
-            className="mt-4 px-4 py-2 rounded-xl text-xs font-semibold text-brand-600 bg-brand-50 hover:bg-brand-100 transition"
+            className="mt-6 px-5 py-2.5 rounded-full text-xs font-mono tracking-wider uppercase text-[#090A0C] bg-[#C8A96B] hover:bg-[#E4D1A1] transition font-bold"
           >
             Reset All Filters
           </button>
@@ -231,4 +231,3 @@ export const VoiceLibraryPage: React.FC<VoiceLibraryPageProps> = ({
     </div>
   );
 };
-

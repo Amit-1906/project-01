@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { PageId, Sidebar } from './components/Sidebar';
+import type { PageId } from './components/Sidebar';
+import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
-import { ToastContainer, ToastMessage } from './components/Toast';
+import type { ToastMessage } from './components/Toast';
+import { ToastContainer } from './components/Toast';
 import { HelpModal } from './pages/HelpModal';
 import { LandingPage } from './pages/LandingPage';
 import { StudioPage } from './pages/StudioPage';
@@ -9,7 +11,7 @@ import { VoiceLibraryPage } from './pages/VoiceLibraryPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { Voice, Project } from './types';
+import type { Voice, Project } from './types';
 import { api } from './services/api';
 import { Menu } from 'lucide-react';
 
@@ -22,16 +24,12 @@ export function App() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark] = useState(true);
 
-  // Initialize theme and load voices
+  // Initialize and load voices
   useEffect(() => {
+    document.documentElement.classList.add('dark');
     loadVoices();
-    // Check dark mode
-    if (localStorage.getItem('voxora_theme') === 'dark') {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    }
   }, []);
 
   const loadVoices = async () => {
@@ -55,23 +53,11 @@ export function App() {
         age: 'Young Adult',
         description: 'Warm, articulate, and crystal clear studio voice.',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
-        color: 'from-purple-500 to-indigo-600',
-        preview_text: 'Welcome to Voxora. Transform your script into pristine speech.',
+        color: 'from-amber-500 to-yellow-600',
+        preview_text: 'Welcome to Voxora. Transform your script into pristine speech with timeless elegance.',
       };
       setVoices([fallback]);
       setSelectedVoice(fallback);
-    }
-  };
-
-  const toggleTheme = () => {
-    const nextDark = !isDark;
-    setIsDark(nextDark);
-    if (nextDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('voxora_theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('voxora_theme', 'light');
     }
   };
 
@@ -95,18 +81,18 @@ export function App() {
       );
       showToast(
         'info',
-        res.is_favorite ? 'Added to Favorites' : 'Removed from Favorites',
+        res.is_favorite ? 'Added to Curated' : 'Removed from Curated',
         'Voice preference updated.'
       );
     } catch (err: any) {
-      showToast('error', 'Favorite Error', err.message);
+      showToast('error', 'Curate Error', err.message);
     }
   };
 
   const handleNewProject = () => {
     setCurrentProject({
       id: '',
-      title: 'New Studio Script',
+      title: 'New Studio Session',
       script_text: '',
       voice_id: selectedVoice?.id || 'en-US-JennyNeural',
       voice_name: selectedVoice?.name || 'Jenny',
@@ -122,7 +108,7 @@ export function App() {
       updated_at: new Date().toISOString(),
     });
     setCurrentPage('studio');
-    showToast('info', 'New Studio Session', 'Blank script loaded in studio.');
+    showToast('info', 'New Studio Session', 'Blank manuscript loaded in studio.');
   };
 
   const handleOpenProject = (project: Project) => {
@@ -132,13 +118,13 @@ export function App() {
       setSelectedVoice(matchedVoice);
     }
     setCurrentPage('studio');
-    showToast('info', 'Project Opened', `Loaded "${project.title}".`);
+    showToast('info', 'Session Opened', `Loaded "${project.title}".`);
   };
 
   const handleLoadScriptToStudio = (text: string, voiceId: string) => {
     setCurrentProject({
       id: '',
-      title: 'Historical Script',
+      title: 'Auditioned Manuscript',
       script_text: text,
       voice_id: voiceId,
       voice_name: 'Studio Voice',
@@ -156,11 +142,11 @@ export function App() {
     const match = voices.find((v) => v.id === voiceId);
     if (match) setSelectedVoice(match);
     setCurrentPage('studio');
-    showToast('info', 'Script Loaded', 'Transferred text from history into Studio.');
+    showToast('info', 'Manuscript Loaded', 'Transferred text from history into Studio.');
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-navy-950 text-navy-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#090A0C] text-[#F5F1E8] antialiased selection:bg-[#C8A96B]/25 selection:text-[#E4D1A1]">
       {/* Toast Notification Container */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
@@ -173,7 +159,6 @@ export function App() {
           <Navbar
             onNavigate={setCurrentPage}
             isDark={isDark}
-            onToggleTheme={toggleTheme}
           />
           <main className="flex-1">
             <LandingPage
@@ -196,23 +181,26 @@ export function App() {
           />
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex-1 flex flex-col min-w-0 bg-[#090A0C]">
             {/* Mobile Header Bar */}
-            <div className="lg:hidden flex items-center justify-between p-3.5 bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-slate-800">
+            <div className="lg:hidden flex items-center justify-between p-4 bg-[#101114] border-b border-[#302D27]">
               <button
                 onClick={() => setIsMobileSidebarOpen(true)}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="p-2 rounded-xl text-[#A5A29B] hover:bg-[#17181C]"
               >
                 <Menu className="w-5 h-5" />
               </button>
-              <span className="font-extrabold text-base tracking-tight text-navy-900 dark:text-white font-['Plus_Jakarta_Sans']">
-                VOXORA<span className="text-brand-600">.</span>
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B]" />
+                <span className="font-serif text-xl font-semibold tracking-[0.2em] text-[#F5F1E8]">
+                  VOXORA
+                </span>
+              </div>
               <button
-                onClick={toggleTheme}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold"
+                onClick={() => setCurrentPage('landing')}
+                className="text-[10px] uppercase font-mono tracking-wider text-[#C8A96B] px-2.5 py-1 rounded-full bg-[#17181C] border border-[#302D27]"
               >
-                {isDark ? '☀️' : '🌙'}
+                Overview
               </button>
             </div>
 
@@ -260,7 +248,7 @@ export function App() {
                   voices={voices}
                   onShowToast={showToast}
                   isDark={isDark}
-                  onToggleTheme={toggleTheme}
+                  onToggleTheme={() => {}}
                 />
               )}
             </div>

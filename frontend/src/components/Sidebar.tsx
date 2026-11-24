@@ -6,10 +6,8 @@ import {
   History,
   Settings,
   HelpCircle,
-  Sparkles,
-  ExternalLink,
-  ChevronRight,
-  Home
+  Home,
+  ChevronRight
 } from 'lucide-react';
 
 export type PageId = 'landing' | 'studio' | 'voices' | 'projects' | 'history' | 'settings';
@@ -30,11 +28,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
 }) => {
   const navItems = [
-    { id: 'studio' as PageId, label: 'AI Voice Studio', icon: Mic, badge: 'Flagship' },
-    { id: 'voices' as PageId, label: 'Voice Library', icon: AudioLines },
+    { id: 'studio' as PageId, label: 'Voice Studio', icon: Mic, badge: 'Flagship' },
+    { id: 'voices' as PageId, label: 'Voice Atelier', icon: AudioLines },
     { id: 'projects' as PageId, label: 'My Projects', icon: FolderOpen },
     { id: 'history' as PageId, label: 'Audio History', icon: History },
-    { id: 'settings' as PageId, label: 'Settings', icon: Settings },
+    { id: 'settings' as PageId, label: 'Preferences', icon: Settings },
   ];
 
   const handleNav = (page: PageId) => {
@@ -47,49 +45,48 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Mobile overlay */}
       {isOpenMobile && (
         <div
-          className="fixed inset-0 bg-navy-950/50 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-[#090A0C]/80 backdrop-blur-sm z-40 lg:hidden"
           onClick={onCloseMobile}
         />
       )}
 
       <aside
-        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-white dark:bg-navy-900 border-r border-slate-200/80 dark:border-slate-800 flex flex-col justify-between transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-[#101114] border-r border-[#302D27] flex flex-col justify-between transition-transform duration-300 ease-in-out ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         <div>
-          {/* Logo & Brand Header */}
-          <div className="p-5 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
+          {/* Brand Header */}
+          <div className="p-6 flex items-center justify-between border-b border-[#302D27]">
             <button
               onClick={() => handleNav('landing')}
-              className="flex items-center gap-2.5 text-left group"
+              className="flex items-center gap-3 text-left group focus:outline-none"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition">
-                <Sparkles className="w-5 h-5 fill-current" />
+              <div className="w-7 h-7 rounded-full border border-[#C8A96B]/50 flex items-center justify-center bg-[#17181C] group-hover:border-[#C8A96B] transition shadow-gold-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B]" />
               </div>
-              <div>
-                <span className="font-extrabold text-lg tracking-tight text-navy-900 dark:text-white flex items-center gap-1 font-['Plus_Jakarta_Sans']">
+              <div className="flex flex-col">
+                <span className="font-serif text-xl font-semibold tracking-[0.2em] text-[#F5F1E8] group-hover:text-[#E4D1A1] transition leading-none">
                   VOXORA
-                  <span className="text-brand-600">.</span>
                 </span>
-                <span className="text-[10px] tracking-wider uppercase font-semibold text-slate-400 block -mt-1">
-                  AI Voice Studio
+                <span className="text-[8px] uppercase tracking-[0.3em] text-[#C8A96B] font-medium mt-1">
+                  STUDIO ATELIER
                 </span>
               </div>
             </button>
 
             <button
               onClick={() => handleNav('landing')}
-              title="Return to Landing Page"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              title="Return to Experience Overview"
+              className="p-1.5 rounded-lg text-[#706E69] hover:text-[#E4D1A1] hover:bg-[#17181C] transition"
             >
               <Home className="w-4 h-4" />
             </button>
           </div>
 
           {/* Navigation Links */}
-          <div className="p-3 space-y-1">
-            <div className="px-3 pt-2 pb-1 text-[11px] font-semibold tracking-wider uppercase text-slate-400">
+          <div className="p-4 space-y-1.5">
+            <div className="px-3 pt-3 pb-1.5 text-[9.5px] font-semibold tracking-[0.25em] uppercase text-[#706E69] font-mono">
               Workspace
             </div>
 
@@ -101,18 +98,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNav(item.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs tracking-wider transition ${
                     isActive
-                      ? 'bg-brand-50 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300 font-semibold shadow-xs'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                      ? 'bg-[#17181C] text-[#E4D1A1] border border-[#C8A96B]/40 font-semibold shadow-gold-sm'
+                      : 'text-[#A5A29B] hover:text-[#F5F1E8] hover:bg-[#141519] border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600 dark:text-brand-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#C8A96B]' : 'text-[#706E69]'}`} />
+                    <span className="font-medium">{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 border border-brand-200/50 dark:border-brand-700/50">
+                    <span className="text-[9px] px-2 py-0.5 rounded-full font-mono font-bold bg-[#C8A96B]/15 text-[#E4D1A1] border border-[#C8A96B]/30 uppercase tracking-widest">
                       {item.badge}
                     </span>
                   )}
@@ -121,54 +118,57 @@ export const Sidebar: React.FC<SidebarProps> = ({
             })}
           </div>
 
-          {/* Quick Support / Docs button */}
-          <div className="p-3 pt-1">
+          {/* Help & Guide */}
+          <div className="p-4 pt-1">
             <button
               onClick={onOpenHelp}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/60 transition"
+              className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-medium text-[#A5A29B] hover:text-[#F5F1E8] hover:bg-[#141519] transition"
             >
-              <HelpCircle className="w-4 h-4 text-slate-400" />
-              <span>Help & Voice Tips</span>
+              <HelpCircle className="w-4 h-4 text-[#706E69]" />
+              <span className="tracking-wide">Studio Nuance Guide</span>
             </button>
           </div>
         </div>
 
-        {/* Bottom Section: Storage Quota & User Badge */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
-          {/* Studio Engine Indicator */}
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-navy-950/60 border border-slate-200/60 dark:border-slate-800">
-            <div className="flex items-center justify-between text-xs font-semibold text-navy-900 dark:text-white mb-1.5">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Neural Studio Engine
+        {/* Bottom Section: Luxury Hardware Engine Status & Profile */}
+        <div className="p-4 border-t border-[#302D27] space-y-3.5">
+          {/* Acoustic Engine Status */}
+          <div className="p-3.5 rounded-2xl bg-[#090A0C] border border-[#302D27]">
+            <div className="flex items-center justify-between text-[11px] font-semibold text-[#F5F1E8] mb-2">
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] animate-pulse" />
+                <span className="tracking-wide">Neural Engine</span>
               </span>
-              <span className="text-brand-600 text-[10px] uppercase font-bold tracking-wider">Active</span>
+              <span className="text-[#C8A96B] text-[9.5px] uppercase font-mono font-bold tracking-widest">
+                ACTIVE
+              </span>
             </div>
-            <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-brand-600 to-indigo-600 h-full w-[24%]" />
+            <div className="w-full bg-[#1D1E22] h-1 rounded-full overflow-hidden">
+              <div className="bg-gradient-to-r from-[#C8A96B] to-[#E4D1A1] h-full w-[35%]" />
             </div>
-            <div className="flex justify-between items-center text-[10px] text-slate-400 mt-1">
-              <span>Unlimited Neural Synthesis</span>
-              <span>HD 48kHz</span>
+            <div className="flex justify-between items-center text-[9.5px] text-[#706E69] font-mono mt-2">
+              <span>UNLIMITED FIDELITY</span>
+              <span>48 KHZ MASTER</span>
             </div>
           </div>
 
-          {/* Profile Card */}
-          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition cursor-pointer">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-500 to-purple-600 text-white font-bold text-xs flex items-center justify-center">
+          {/* User Profile */}
+          <div className="flex items-center justify-between p-2 rounded-2xl hover:bg-[#141519] transition cursor-pointer">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#C8A96B] to-[#E4D1A1] text-[#090A0C] font-bold text-xs flex items-center justify-center font-mono">
                 AM
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-navy-900 dark:text-white">Alex Mercer</div>
-                <div className="text-[10px] text-slate-400">Creator Studio Plan</div>
+                <div className="text-xs font-medium text-[#F5F1E8]">Alex Mercer</div>
+                <div className="text-[10px] text-[#706E69] tracking-wider uppercase font-mono">
+                  Private Edition
+                </div>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-[#706E69]" />
           </div>
         </div>
       </aside>
     </>
   );
 };
-

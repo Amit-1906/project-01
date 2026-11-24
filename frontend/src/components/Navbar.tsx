@@ -1,6 +1,6 @@
 import React from 'react';
-import { Sparkles, ArrowRight, Sun, Moon } from 'lucide-react';
-import { PageId } from './Sidebar';
+import { ArrowRight } from 'lucide-react';
+import type { PageId } from './Sidebar';
 
 interface NavbarProps {
   onNavigate: (page: PageId) => void;
@@ -8,73 +8,65 @@ interface NavbarProps {
   onToggleTheme?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigate, isDark = false, onToggleTheme }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-navy-950/80 border-b border-slate-200/80 dark:border-slate-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand */}
+    <header className="sticky top-0 z-50 w-full bg-[#090A0C]/90 backdrop-blur-xl border-b border-[#302D27]/80 transition-colors">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
+        {/* Minimal Luxury Wordmark */}
         <button
           onClick={() => onNavigate('landing')}
-          className="flex items-center gap-2.5 text-left group"
+          className="flex items-center gap-3.5 text-left group focus:outline-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition">
-            <Sparkles className="w-5 h-5 fill-current" />
+          <div className="w-8 h-8 rounded-full border border-[#C8A96B]/50 flex items-center justify-center bg-[#17181C] group-hover:border-[#C8A96B] transition shadow-gold-sm">
+            <span className="w-2 h-2 rounded-full bg-[#C8A96B] group-hover:scale-125 transition" />
           </div>
-          <div>
-            <span className="font-extrabold text-xl tracking-tight text-navy-900 dark:text-white flex items-center gap-1 font-['Plus_Jakarta_Sans']">
+          <div className="flex flex-col">
+            <span className="font-serif text-2xl font-semibold tracking-[0.22em] text-[#F5F1E8] group-hover:text-[#E4D1A1] transition leading-none">
               VOXORA
-              <span className="text-brand-600">.</span>
             </span>
-            <span className="text-[10px] tracking-wider uppercase font-semibold text-slate-400 block -mt-1">
-              AI Voice Studio
+            <span className="text-[8.5px] uppercase tracking-[0.35em] text-[#C8A96B] font-medium mt-1">
+              HAUTE ACOUSTICS
             </span>
           </div>
         </button>
 
-        {/* Center Nav Links */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600 dark:text-slate-300">
-          <a href="#how-it-works" className="hover:text-brand-600 dark:hover:text-white transition">
-            How It Works
+        {/* Center Editorial Links */}
+        <nav className="hidden md:flex items-center space-x-10 text-[12px] font-medium tracking-[0.16em] uppercase text-[#A5A29B]">
+          <a href="#experience" className="hover:text-[#E4D1A1] transition-colors">
+            Experience
           </a>
           <button
             onClick={() => onNavigate('voices')}
-            className="hover:text-brand-600 dark:hover:text-white transition"
+            className="hover:text-[#E4D1A1] transition-colors uppercase tracking-[0.16em]"
           >
-            Voice Library
+            Voice Atelier
           </button>
-          <a href="#features" className="hover:text-brand-600 dark:hover:text-white transition">
-            Features
+          <a href="#craft" className="hover:text-[#E4D1A1] transition-colors">
+            The Craft
           </a>
-          <a href="#languages" className="hover:text-brand-600 dark:hover:text-white transition">
-            Languages
-          </a>
-          <a href="#pricing" className="hover:text-brand-600 dark:hover:text-white transition">
-            Pricing
+          <a href="#curation" className="hover:text-[#E4D1A1] transition-colors">
+            Editions
           </a>
         </nav>
 
-        {/* Right Actions */}
-        <div className="flex items-center space-x-3">
-          {onToggleTheme && (
-            <button
-              onClick={onToggleTheme}
-              className="p-2 rounded-xl text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              title="Toggle theme"
-            >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
+        {/* Right Action: Gold Button */}
+        <div className="flex items-center space-x-5">
+          <button
+            onClick={() => onNavigate('studio')}
+            className="hidden sm:inline-block text-[11.5px] tracking-[0.18em] uppercase font-semibold text-[#A5A29B] hover:text-[#F5F1E8] transition"
+          >
+            Sign In
+          </button>
 
           <button
             onClick={() => onNavigate('studio')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 shadow-md shadow-brand-500/20 transition transform active:scale-95"
+            className="btn-gold px-5 sm:px-6 py-2.5 rounded-full text-[11px] font-bold tracking-[0.16em] inline-flex items-center gap-2 group"
           >
-            <span>Open Studio</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Start Creating</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
       </div>
     </header>
   );
 };
-
