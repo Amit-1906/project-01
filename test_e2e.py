@@ -43,12 +43,19 @@ def test():
     print("Duration (s):", gen_data['duration'])
     print("Word Count:", gen_data['word_count'])
 
-    print("\n=== 5. Testing Generated Audio File Delivery ===")
-    audio_req = urllib.request.urlopen("http://127.0.0.1:5173" + gen_data['audio_url'])
-    content = audio_req.read()
-    print(f"Audio Status: {audio_req.status}")
-    print(f"Audio Size (bytes): {len(content)}")
-    print(f"Content Type: {audio_req.headers.get('Content-Type')}")
+    print("\n=== 5. Testing Generated Audio Delivery ===")
+    target_url = gen_data['audio_url']
+    if target_url.startswith("data:"):
+        print(f"Direct in-memory audio data stream detected (length: {len(target_url)})")
+        audio_req = urllib.request.urlopen(target_url)
+        content = audio_req.read()
+        print(f"Audio Size (bytes): {len(content)}")
+    else:
+        audio_req = urllib.request.urlopen("http://127.0.0.1:5173" + target_url)
+        content = audio_req.read()
+        print(f"Audio Status: {audio_req.status}")
+        print(f"Audio Size (bytes): {len(content)}")
+        print(f"Content Type: {audio_req.headers.get('Content-Type')}")
 
     print("\n=== 6. Testing Projects and History Sync ===")
     p_req = urllib.request.urlopen("http://127.0.0.1:5173/api/projects")

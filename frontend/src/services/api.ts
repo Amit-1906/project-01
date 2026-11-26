@@ -1,6 +1,7 @@
 import { Voice, Project, HistoryItem, UserSettings } from '../types';
 
-const API_BASE = '/api';
+const rawBase = import.meta.env.VITE_API_URL ? String(import.meta.env.VITE_API_URL).trim().replace(/\/$/, '') : '';
+const API_BASE = rawBase ? `${rawBase}/api` : '/api';
 
 export const api = {
   // Voices
@@ -59,8 +60,14 @@ export const api = {
       body: JSON.stringify(params),
     });
     if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'Generation failed' }));
-      throw new Error(err.detail || 'Failed to generate speech');
+      let errMsg = 'Failed to generate speech';
+      try {
+        const err = await res.json();
+        errMsg = err.detail || err.message || JSON.stringify(err);
+      } catch {
+        errMsg = `Server error ${res.status}: ${res.statusText || 'Speech generation failed'}`;
+      }
+      throw new Error(errMsg);
     }
     return res.json();
   },
@@ -77,8 +84,14 @@ export const api = {
       body: JSON.stringify({ voice_id: voiceId, text }),
     });
     if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'Preview failed' }));
-      throw new Error(err.detail || 'Failed to preview voice');
+      let errMsg = 'Failed to preview voice';
+      try {
+        const err = await res.json();
+        errMsg = err.detail || err.message || JSON.stringify(err);
+      } catch {
+        errMsg = `Server error ${res.status}: ${res.statusText || 'Voice preview failed'}`;
+      }
+      throw new Error(errMsg);
     }
     return res.json();
   },

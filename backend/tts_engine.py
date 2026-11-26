@@ -1,16 +1,30 @@
 import os
 import re
 import uuid
+import base64
 import asyncio
 import httpx
 from datetime import datetime
 import edge_tts
-import pyttsx3
 
-# Storage directories
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-AUDIO_DIR = os.path.join(BASE_DIR, "storage", "audio")
-os.makedirs(AUDIO_DIR, exist_ok=True)
+# Safe audio storage directory (resilient to serverless / read-only filesystem)
+def get_audio_dir() -> str:
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        path = "/tmp/voxora_audio"
+    else:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "storage", "audio")
+    try:
+        os.makedirs(path, exist_ok=True)
+        return path
+    except Exception:
+        tmp_path = os.path.join(os.environ.get("TEMP", "/tmp"), "voxora_audio")
+        try:
+            os.makedirs(tmp_path, exist_ok=True)
+            return tmp_path
+        except Exception:
+            return "/tmp"
+
+AUDIO_DIR = get_audio_dir()
 
 def normalize_text(text: str) -> str:
     """Normalize text, replace smart quotes, dashes, excessive whitespace."""
@@ -28,7 +42,6 @@ def chunk_text(text: str, max_chars: int = 500) -> list[str]:
     if len(normalized) <= max_chars:
         return [normalized] if normalized else []
     
-    # Split by sentence terminators
     sentences = re.split(r'(?<=[.!?])\s+', normalized)
     chunks = []
     current_chunk = []
@@ -53,17 +66,14 @@ class TTSManager:
         pass
 
     def _format_rate(self, speed: float) -> str:
-        # 1.0 is +0%, 1.25 is +25%, 0.8 is -20%
         pct = int(round((speed - 1.0) * 100))
         return f"+{pct}%" if pct >= 0 else f"{pct}%"
 
     def _format_pitch(self, pitch: float) -> str:
-        # 1.0 is +0Hz, 1.1 is +10Hz, 0.9 is -10Hz
         hz = int(round((pitch - 1.0) * 100))
         return f"+{hz}Hz" if hz >= 0 else f"{hz}Hz"
 
     def _format_volume(self, volume: float) -> str:
-        # 1.0 is +0%, 0.8 is -20%
         pct = int(round((volume - 1.0) * 100))
         return f"+{pct}%" if pct >= 0 else f"{pct}%"
 
@@ -80,7 +90,8 @@ class TTSManager:
         elevenlabs_key: str = ""
     ) -> dict:
         """
-        Generate speech audio and return dict with file path, url, duration, and stats.
+        Generate speech audio and return dict with audio data URI, duration, file size, and stats.
+        Uses in-memory streaming to guarantee 100% reliable playback across both local and serverless deployments.
         """
         clean_text = normalize_text(text)
         if not clean_text:
@@ -92,7 +103,6 @@ class TTSManager:
         # 1. If OpenAI engine requested and API key provided
         if engine == "openai" and openai_key:
             try:
-                # Map voice_id to OpenAI voices (alloy, echo, fable, onyx, nova, shimmer)
                 openai_voice = "alloy"
                 for v in ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]:
                     if v in voice_id.lower():
@@ -114,14 +124,16 @@ class TTSManager:
                         }
                     )
                     if resp.status_code == 200:
-                        with open(file_path, "wb") as f:
-                            f.write(resp.content)
+                        audio_bytes = resp.content
+                        self._safe_write_file(file_path, audio_bytes)
                         duration = self._estimate_duration(clean_text, speed)
+                        b64 = base64.b64encode(audio_bytes).decode("ascii")
                         return {
                             "filename": filename,
-                            "audio_url": f"/api/audio/{filename}",
+                            "audio_url": f"data:audio/mp3;base64,{b64}",
+                            "file_url": f"/api/audio/{filename}",
                             "duration": duration,
-                            "file_size": len(resp.content),
+                            "file_size": len(audio_bytes),
                             "engine": "openai",
                             "char_count": len(clean_text),
                             "word_count": len(clean_text.split())
@@ -151,14 +163,16 @@ class TTSManager:
                         }
                     )
                     if resp.status_code == 200:
-                        with open(file_path, "wb") as f:
-                            f.write(resp.content)
+                        audio_bytes = resp.content
+                        self._safe_write_file(file_path, audio_bytes)
                         duration = self._estimate_duration(clean_text, speed)
+                        b64 = base64.b64encode(audio_bytes).decode("ascii")
                         return {
                             "filename": filename,
-                            "audio_url": f"/api/audio/{filename}",
+                            "audio_url": f"data:audio/mp3;base64,{b64}",
+                            "file_url": f"/api/audio/{filename}",
                             "duration": duration,
-                            "file_size": len(resp.content),
+                            "file_size": len(audio_bytes),
                             "engine": "elevenlabs",
                             "char_count": len(clean_text),
                             "word_count": len(clean_text.split())
@@ -166,62 +180,101 @@ class TTSManager:
             except Exception as e:
                 print(f"ElevenLabs TTS fallback to Neural: {e}")
 
-        # 3. Default High-Fidelity Neural TTS (Edge / Azure Neural)
+        # 3. Default High-Fidelity Neural TTS (Edge / Azure Neural) with streaming & automatic retry
+        last_error = None
+        for attempt in range(2):
+            try:
+                rate_str = self._format_rate(speed)
+                pitch_str = self._format_pitch(pitch)
+                volume_str = self._format_volume(volume)
+
+                communicate = edge_tts.Communicate(
+                    text=clean_text,
+                    voice=voice_id,
+                    rate=rate_str,
+                    pitch=pitch_str,
+                    volume=volume_str
+                )
+
+                # Stream audio chunks directly in memory (45s timeout for longer passages)
+                audio_chunks = []
+                async def fetch_stream():
+                    async for chunk in communicate.stream():
+                        if chunk["type"] == "audio":
+                            audio_chunks.append(chunk["data"])
+
+                await asyncio.wait_for(fetch_stream(), timeout=45.0)
+
+                if not audio_chunks:
+                    raise RuntimeError("No audio data received from neural speech synthesizer.")
+
+                audio_bytes = b"".join(audio_chunks)
+                self._safe_write_file(file_path, audio_bytes)
+
+                duration = self._estimate_duration(clean_text, speed)
+                b64 = base64.b64encode(audio_bytes).decode("ascii")
+                data_uri = f"data:audio/mp3;base64,{b64}"
+
+                return {
+                    "filename": filename,
+                    "audio_url": data_uri,
+                    "file_url": f"/api/audio/{filename}",
+                    "duration": duration,
+                    "file_size": len(audio_bytes),
+                    "engine": "neural",
+                    "char_count": len(clean_text),
+                    "word_count": len(clean_text.split())
+                }
+            except Exception as e:
+                last_error = e
+                print(f"EdgeTTS attempt {attempt + 1} notice: {e}")
+                if attempt == 0:
+                    await asyncio.sleep(0.6)
+
+        # 4. Fallback: try pyttsx3 if installed and available (local desktop only)
         try:
-            rate_str = self._format_rate(speed)
-            pitch_str = self._format_pitch(pitch)
-            volume_str = self._format_volume(volume)
-
-            communicate = edge_tts.Communicate(
-                text=clean_text,
-                voice=voice_id,
-                rate=rate_str,
-                pitch=pitch_str,
-                volume=volume_str
-            )
-            # 8 second timeout for edge-tts streaming
-            await asyncio.wait_for(communicate.save(file_path), timeout=8.0)
-
-            file_size = os.path.getsize(file_path)
-            duration = self._estimate_duration(clean_text, speed)
-
-            return {
-                "filename": filename,
-                "audio_url": f"/api/audio/{filename}",
-                "duration": duration,
-                "file_size": file_size,
-                "engine": "neural",
-                "char_count": len(clean_text),
-                "word_count": len(clean_text.split())
-            }
-        except Exception as e:
-            print(f"EdgeTTS generation notice: {e}. Falling back to local offline engine.")
-            # 4. Local offline system engine fallback
             return self._fallback_pyttsx3(clean_text, filename, file_path, speed)
+        except Exception:
+            raise RuntimeError(f"Speech synthesis error: {last_error or 'Synthesis failed'}")
+
+    def _safe_write_file(self, file_path: str, data: bytes):
+        """Attempt to save audio to disk if writeable, without throwing on read-only environments."""
+        try:
+            with open(file_path, "wb") as f:
+                f.write(data)
+        except Exception as e:
+            print(f"Notice: Storage cache write skipped ({e})")
 
     def _fallback_pyttsx3(self, text: str, filename: str, file_path: str, speed: float) -> dict:
-        """Fallback offline engine using local OS voice."""
+        """Fallback offline engine using local OS voice (if available)."""
         try:
+            import pyttsx3
             engine = pyttsx3.init()
-            # Set rate (default ~200)
             engine.setProperty('rate', int(180 * speed))
-            # Save to wav / file
             engine.save_to_file(text, file_path)
             engine.runAndWait()
 
-            file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
             duration = self._estimate_duration(text, speed)
+            audio_bytes = b""
+            if os.path.exists(file_path):
+                with open(file_path, "rb") as f:
+                    audio_bytes = f.read()
+
+            b64 = base64.b64encode(audio_bytes).decode("ascii") if audio_bytes else ""
+            data_uri = f"data:audio/mp3;base64,{b64}" if b64 else f"/api/audio/{filename}"
+
             return {
                 "filename": filename,
-                "audio_url": f"/api/audio/{filename}",
+                "audio_url": data_uri,
+                "file_url": f"/api/audio/{filename}",
                 "duration": duration,
-                "file_size": file_size,
+                "file_size": len(audio_bytes),
                 "engine": "local_demo",
                 "char_count": len(text),
                 "word_count": len(text.split())
             }
         except Exception as ex:
-            raise RuntimeError(f"All speech engines failed: {ex}")
+            raise RuntimeError(f"Local voice engine unavailable: {ex}")
 
     def _estimate_duration(self, text: str, speed: float) -> float:
         """Estimate spoken duration based on average human speech rate (~140 WPM)."""
